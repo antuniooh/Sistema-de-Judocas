@@ -17,10 +17,9 @@ import org.fpij.jitakyoei.util.DatabaseManager;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.Mockito;
 import utils.GenerateObjects;
 
-public class AlunoDaoTest {
+public class DaoImplTest {
 	
 	private static DAO<Aluno> alunoDao;
 	private static Aluno aluno;
