@@ -1,6 +1,7 @@
 package org.fpij.jitakyoei.model.dao;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Date;
 import java.util.List;
@@ -10,10 +11,14 @@ import org.fpij.jitakyoei.model.beans.Endereco;
 import org.fpij.jitakyoei.model.beans.Entidade;
 import org.fpij.jitakyoei.model.beans.Filiado;
 import org.fpij.jitakyoei.model.beans.Professor;
+import org.fpij.jitakyoei.model.validator.AlunoValidator;
+import org.fpij.jitakyoei.model.validator.Validator;
 import org.fpij.jitakyoei.util.DatabaseManager;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.Mockito;
+import utils.GenerateObjects;
 
 public class AlunoDaoTest {
 	
@@ -73,18 +78,62 @@ public class AlunoDaoTest {
 		}
 		assertEquals(0, alunoDao.list().size());
 	}
-	
-	
+
+	// check differents constructors
+	@Test
+	public void checkConstructorWithUseEquals(){
+		DAO<Aluno> alunoDao = new DAOImpl<Aluno>(Aluno.class, false );
+
+		assertNotNull(alunoDao);
+	}
+
+	@Test
+	public void checkConstructorWithUseEqualsAndValidatorCustom(){
+
+		DAO<Aluno> alunoDao = new DAOImpl<Aluno>(
+				Aluno.class,
+				new AlunoValidator(),
+				false);
+
+		assertNotNull(alunoDao);
+	}
+
+	// test save function
 	@Test
 	public void  testSalvarAlunoComAssociassoes() throws Exception{
 		clearDatabase();
-		
-		alunoDao.save(aluno);
+
+		boolean returnReceived = alunoDao.save(aluno);
 		assertEquals("036.464.453-27", alunoDao.get(aluno).getFiliado().getCpf());
 		assertEquals("Aécio", alunoDao.get(aluno).getFiliado().getNome());
 		assertEquals("Professor", alunoDao.get(aluno).getProfessor().getFiliado().getNome());
 		assertEquals("Dirceu", alunoDao.get(aluno).getProfessor().getFiliado().getEndereco().getBairro());
+		assertEquals(true, returnReceived);
+
 	}
+
+	@Test
+	public void  testSalvarAlunoComErroValidacao(){
+		clearDatabase();
+
+		class CustomValidator<T> implements Validator<T> {
+			@Override
+			public boolean validate(T obj) {
+				return false;
+			}
+		}
+
+		DAO<Aluno> alunoDao = new DAOImpl<Aluno>(
+				Aluno.class,
+				new CustomValidator<Aluno>(),
+				false);
+
+
+		boolean returnReceived = alunoDao.save(aluno);
+		assertEquals(false, returnReceived);
+
+	}
+
 	
 	@Test
 	public void updateAluno() throws Exception{
@@ -103,30 +152,60 @@ public class AlunoDaoTest {
 		assertEquals("TesteUpdate", a2.getFiliado().getNome());
 		assertEquals(1, alunoDao.list().size());
 	}
-	
+
+	// test list functions
+	@Test
+	public void testgetAlunosWithUseEquals(){
+		int qtd = alunoDao.list().size();
+
+		DAO<Aluno> alunoDaoTest = new DAOImpl<>(Aluno.class, true);
+
+		alunoDaoTest.save(aluno);
+		assertEquals(qtd+1, alunoDaoTest.list().size());
+
+
+		Aluno retornoAluno = alunoDaoTest.get(aluno);
+
+		assertEquals(aluno, retornoAluno);
+	}
+
+	@Test
+	public void testGetAlunosWithUseEqualsAndEmpty(){
+		DAO<Aluno> alunoDaoTest = new DAOImpl<>(Aluno.class, true);
+
+		try {
+			Aluno retornoAluno = alunoDaoTest.get(aluno);
+		} catch (Exception e){
+			assertNotNull(e);
+			assertEquals(e.getClass(), IllegalArgumentException.class);
+
+		}
+	}
+
+	// test get function
+
 	@Test
 	public void testListarEAdicionarAlunos(){
 		int qtd = alunoDao.list().size();
-		
-		alunoDao.save(new Aluno());
-		assertEquals(qtd+1, alunoDao.list().size());
-		
-		alunoDao.save(new Aluno());
-		assertEquals(qtd+2, alunoDao.list().size());
-		
-		alunoDao.save(new Aluno());
-		assertEquals(qtd+3, alunoDao.list().size());
-		
-		alunoDao.save(new Aluno());
-		assertEquals(qtd+4, alunoDao.list().size());
-		
+
+		alunoDao.save(GenerateObjects.generateAluno());
+		assertEquals(qtd + 1, alunoDao.list().size());
+
+		alunoDao.save(GenerateObjects.generateAluno());
+		assertEquals(qtd + 2, alunoDao.list().size());
+
+		alunoDao.save(GenerateObjects.generateAluno());
+		assertEquals(qtd + 3, alunoDao.list().size());
+
+		alunoDao.save(GenerateObjects.generateAluno());
+		assertEquals(qtd + 4, alunoDao.list().size());
+
 		clearDatabase();
 		assertEquals(0, alunoDao.list().size());
-		
-		alunoDao.save(new Aluno());
+
+		alunoDao.save(GenerateObjects.generateAluno());
 		assertEquals(1, alunoDao.list().size());
 	}
-	
 	@Test
 	public void testSearchAluno() throws Exception{
 		clearDatabase();
