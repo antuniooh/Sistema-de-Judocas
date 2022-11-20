@@ -41,8 +41,14 @@ public class ProfessorBuscarView implements ViewComponent{
 	
 	private void buscarProfessores(String nome, Long registroFpij) {
 		Filiado filiado = new Filiado();
-		filiado.setNome(nome);
-		filiado.setId(registroFpij);
+		if(nome!=null && !nome.trim().equals("")){
+			filiado.setNome(nome);
+		}
+
+		if(registroFpij!=null){
+			filiado.setId(registroFpij);
+		}
+		
 		Professor professor = new Professor();
 		professor.setFiliado(filiado);
 		try {
