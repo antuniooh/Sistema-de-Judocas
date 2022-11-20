@@ -39,8 +39,7 @@ public class AlunoBOImpl implements AlunoBO {
 	@Override
 	public void updateAluno(Aluno aluno) throws Exception{
 		try {
-			Aluno old = null;
-			old = dao.get(aluno);
+			Aluno old = dao.get(aluno);
 			if(old!=null){		
 				old.copyProperties(aluno);
 			}
