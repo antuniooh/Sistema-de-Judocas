@@ -28,7 +28,7 @@ public class AlunoBOImpl implements AlunoBO {
 			dao.save(aluno);
 			fireModelChangeEvent(aluno);
 		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException( "Ocorreu um erro ao cadastrar o aluno!"
+			throw new IllegalArgumentException("Ocorreu um erro ao cadastrar o aluno!"
 				+ " Verifique se todos os dados foram preenchidos corretamente.");
 		} catch (Exception e) {
 			e.printStackTrace();

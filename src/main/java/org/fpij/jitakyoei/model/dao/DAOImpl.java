@@ -35,7 +35,7 @@ public class DAOImpl<E> implements DAO<E> {
 	
 	@Override
 	public synchronized boolean save(E object) {
-		System.out.println("DAOImpl.save()");
+		System.out.println("DAOImpl.save() ->" + db.isClosed());
 		System.out.println(object);
 		if(validator.validate(object)){
 			db.store(object);
