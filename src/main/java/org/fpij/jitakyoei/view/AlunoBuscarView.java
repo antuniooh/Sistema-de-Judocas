@@ -63,7 +63,7 @@ public class AlunoBuscarView implements ViewComponent {
 			try{
 				filiado.setId(Long.parseLong(campoBusca.getRegistroFpij()));
 			}catch (Exception e) {
-				JOptionPane.showMessageDialog(gui,"Nº de Registro inválido! No resgistro só pode haver números.");
+				JOptionPane.showMessageDialog(gui,"Nº de Registro inválido! No registro só pode haver números.");
 				return;
 			}
 		}
@@ -86,7 +86,7 @@ public class AlunoBuscarView implements ViewComponent {
 			}
 		}
 		alunoTableModel.setDataVector(data, new String[] { 
-				"Resistro", "Nome", "Professor", "Entidade" });
+				"Registro", "Nome", "Professor", "Entidade" });
 	}
 
 	public class BuscarActionHandler implements ActionListener {
