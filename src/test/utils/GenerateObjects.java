@@ -1,12 +1,23 @@
 package utils;
 
+import org.fpij.jitakyoei.facade.AppFacade;
 import org.fpij.jitakyoei.model.beans.*;
 import org.fpij.jitakyoei.util.CorFaixa;
+import org.fpij.jitakyoei.view.AppView;
 
 import java.util.Date;
 import java.util.Random;
 
 public class GenerateObjects {
+
+    public static ProfessorEntidade generateProfessorEntidade() {
+        ProfessorEntidade f1 = new ProfessorEntidade(
+                GenerateObjects.generateProfessor(),
+                GenerateObjects.generateEntidade()
+        );
+
+        return f1;
+    }
 
     public static Filiado generateFiliado() {
         Filiado f1 = new Filiado();
@@ -49,6 +60,25 @@ public class GenerateObjects {
         aluno.setProfessor(GenerateObjects.generateProfessor());
         aluno.setEntidade(GenerateObjects.generateEntidade());
         return aluno;
+    }
+
+    public static AppView generateAppView(){
+        return new AppView() {
+            @Override
+            public void handleModelChange(Object obj) {
+
+            }
+
+            @Override
+            public void displayException(Exception e) {
+
+            }
+
+            @Override
+            public void registerFacade(AppFacade facade) {
+
+            }
+        };
     }
 
 }
