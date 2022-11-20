@@ -2,7 +2,6 @@ package utils;
 
 import org.fpij.jitakyoei.facade.AppFacade;
 import org.fpij.jitakyoei.model.beans.*;
-import org.fpij.jitakyoei.util.CorFaixa;
 import org.fpij.jitakyoei.view.AppView;
 
 import java.util.Date;
