@@ -1,4 +1,4 @@
-package org.fpij.jitakyoei.util;
+package org.fpij.jitakyoei.model.beans;
 
 import java.util.ArrayList;
 import java.util.List;

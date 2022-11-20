@@ -1,6 +1,5 @@
 package org.fpij.jitakyoei.model.beans;
 
-import org.fpij.jitakyoei.util.CorFaixa;
 import org.junit.Test;
 
 import java.util.Date;

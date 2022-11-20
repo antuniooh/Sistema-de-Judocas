@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 
 import org.fpij.jitakyoei.model.beans.Faixa;
 import org.fpij.jitakyoei.model.beans.Filiado;
-import org.fpij.jitakyoei.util.CorFaixa;
+import org.fpij.jitakyoei.model.beans.CorFaixa;
 import org.fpij.jitakyoei.view.gui.FiliadoPanel;
 
 public class FiliadoForm {
