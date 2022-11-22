@@ -55,7 +55,7 @@ public class EntidadeBOImplTest {
     }
 
     @Test
-    public void checkUpdateEntidadeIllegalArgumentException() throws Exception {
+    public void checkUpdateEntidadeIllegalArgumentException() {
         try{
             entidadeTest.updateEntidade(new Entidade());
         } catch (Exception e){
@@ -65,7 +65,7 @@ public class EntidadeBOImplTest {
     }
 
     @Test
-    public void checkUpdateEntidadeException() throws Exception {
+    public void checkUpdateEntidadeException() {
         try{
             entidadeTest.updateEntidade(new Entidade());
         } catch (Exception e){
@@ -76,7 +76,7 @@ public class EntidadeBOImplTest {
 
 
     @Test
-    public void checkCreateEntidadeException() throws Exception {
+    public void checkCreateEntidadeException() {
         try {
             entidadeTest.createEntidade(null);
         } catch (Exception e){
@@ -86,7 +86,7 @@ public class EntidadeBOImplTest {
     }
 
     @Test
-    public void checkSearchEntidadeException() throws Exception {
+    public void checkSearchEntidadeException() {
 
         try {
             entidadeTest.searchEntidade(null);
