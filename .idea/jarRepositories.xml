@@ -9,12 +9,12 @@
     <remote-repository>
       <option name="id" value="libs" />
       <option name="name" value="libs" />
-      <option name="url" value="file:$PROJECT_DIR$/lib" />
+      <option name="url" value="file://$PROJECT_DIR$/lib" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="libs" />
       <option name="name" value="libs" />
-      <option name="url" value="file://$PROJECT_DIR$/lib" />
+      <option name="url" value="file:$PROJECT_DIR$/lib" />
     </remote-repository>
     <remote-repository>
       <option name="id" value="central" />
