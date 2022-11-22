@@ -72,7 +72,7 @@ public class AlunoBOImplTest {
             alunoTest.updateAluno(new Aluno());
         } catch (Exception e){
             assertNotNull(e);
-            assertEquals(Exception.class, e.getClass());
+            assertEquals(IllegalArgumentException.class, e.getClass());
 //            DatabaseManager.setEnviroment(DatabaseManager.TEST);
 //            DatabaseManager.open();
         }
