@@ -1,5 +1,5 @@
-name: Build CI
-run-name: Build workflow
+name: CI/CD
+run-name: Basic CI/CD workflow
 on: [push]
 
 jobs:
