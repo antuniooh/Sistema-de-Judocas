@@ -5,6 +5,7 @@ import org.fpij.jitakyoei.model.beans.Filiado;
 import org.fpij.jitakyoei.util.DatabaseManager;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 import utils.GenerateObjects;
 
 import java.util.List;
@@ -19,7 +20,12 @@ public class EntidadeBOImplTest {
     @BeforeClass
     public static void set(){
         DatabaseManager.setEnviroment(DatabaseManager.TEST);
+    }
 
+    @AfterEach
+    public static void afterEach(){
+        DatabaseManager.setEnviroment(DatabaseManager.TEST);
+        DatabaseManager.getConnection().rollback();
     }
 
     @Test
@@ -57,7 +63,7 @@ public class EntidadeBOImplTest {
     @Test
     public void checkUpdateEntidadeIllegalArgumentException() {
         try{
-            entidadeTest.updateEntidade(new Entidade());
+            entidadeTest.updateEntidade(GenerateObjects.generateEntidade());
         } catch (Exception e){
             assertNotNull(e);
             assertEquals(IllegalArgumentException.class, e.getClass());

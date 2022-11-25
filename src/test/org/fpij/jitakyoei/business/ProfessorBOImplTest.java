@@ -5,6 +5,7 @@ import org.fpij.jitakyoei.model.beans.Professor;
 import org.fpij.jitakyoei.util.DatabaseManager;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 import utils.GenerateObjects;
 
 import java.util.List;
@@ -20,6 +21,12 @@ public class ProfessorBOImplTest {
     public static void set(){
         DatabaseManager.setEnviroment(DatabaseManager.TEST);
 
+    }
+
+    @AfterEach
+    public static void afterEach(){
+        DatabaseManager.setEnviroment(DatabaseManager.TEST);
+        DatabaseManager.getConnection().rollback();
     }
 
     @Test

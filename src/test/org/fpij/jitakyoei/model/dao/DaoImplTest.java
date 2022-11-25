@@ -17,6 +17,7 @@ import org.fpij.jitakyoei.util.DatabaseManager;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 import utils.GenerateObjects;
 
 public class DaoImplTest {
@@ -60,7 +61,7 @@ public class DaoImplTest {
 		entidade = new Entidade();
 		entidade.setEndereco(endereco);
 		entidade.setNome("Academia 1");
-		entidade.setTelefone1("(086)1234-5432");
+		entidade.setTelefone1("8612345432");
 		
 		aluno = new Aluno();
 		aluno.setFiliado(f1);
@@ -68,6 +69,12 @@ public class DaoImplTest {
 		aluno.setEntidade(entidade);
 		
 		alunoDao = new DAOImpl<Aluno>(Aluno.class);
+	}
+
+	@AfterEach
+	public static void afterEach(){
+		DatabaseManager.setEnviroment(DatabaseManager.TEST);
+		DatabaseManager.getConnection().rollback();
 	}
 
 	public static void clearDatabase(){
@@ -112,7 +119,7 @@ public class DaoImplTest {
 	}
 
 	@Test
-	public void  testSalvarAlunoComErroValidacao(){
+	public void  testSalvarAlunoComErroValidacao() throws Exception{
 		clearDatabase();
 
 		class CustomValidator<T> implements Validator<T> {
@@ -154,7 +161,7 @@ public class DaoImplTest {
 
 	// test list functions
 	@Test
-	public void testgetAlunosWithUseEquals(){
+	public void testgetAlunosWithUseEquals() throws Exception{
 		int qtd = alunoDao.list().size();
 
 		DAO<Aluno> alunoDaoTest = new DAOImpl<>(Aluno.class, true);
@@ -184,7 +191,7 @@ public class DaoImplTest {
 	// test get function
 
 	@Test
-	public void testListarEAdicionarAlunos(){
+	public void testListarEAdicionarAlunos() throws Exception{
 		int qtd = alunoDao.list().size();
 
 		alunoDao.save(GenerateObjects.generateAluno());

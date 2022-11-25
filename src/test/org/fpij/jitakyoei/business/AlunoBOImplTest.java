@@ -9,6 +9,7 @@ import org.fpij.jitakyoei.util.FiliadoID;
 import org.fpij.jitakyoei.view.AppView;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import utils.GenerateObjects;
@@ -21,6 +22,12 @@ import static org.junit.Assert.*;
 public class AlunoBOImplTest {
 
     AlunoBOImpl alunoTest = new AlunoBOImpl(GenerateObjects.generateAppView());
+
+    @AfterEach
+    public static void afterEach(){
+        DatabaseManager.setEnviroment(DatabaseManager.TEST);
+        DatabaseManager.getConnection().rollback();
+    }
 
     @Test
     public void checkCreateAluno() throws Exception {

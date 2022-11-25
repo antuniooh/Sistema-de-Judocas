@@ -7,8 +7,7 @@ public class NameVerifier implements Verifier<Entidade>{
     @Override
     public Pair<Boolean, String> verify(Entidade obj) {
         String name = obj.getNome();
-        boolean result = name.matches("[a-zA-Z]+");
 
-        return Pair.of(result, "entidade");
+        return Pair.of(!name.isEmpty(), "entidade");
     }
 }

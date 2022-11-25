@@ -5,6 +5,7 @@ import org.fpij.jitakyoei.model.beans.Filiado;
 import org.fpij.jitakyoei.model.beans.ProfessorEntidade;
 import org.fpij.jitakyoei.util.DatabaseManager;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
 import utils.GenerateObjects;
 
 import java.util.ArrayList;
@@ -27,6 +28,11 @@ public class ProfessorEntidadeBOImplTest {
 
     }
 
+    @AfterEach
+    public static void afterEach(){
+        DatabaseManager.setEnviroment(DatabaseManager.TEST);
+        DatabaseManager.getConnection().rollback();
+    }
 
     @Test
     public void checkCreateProfessorEntidadeException() throws Exception {

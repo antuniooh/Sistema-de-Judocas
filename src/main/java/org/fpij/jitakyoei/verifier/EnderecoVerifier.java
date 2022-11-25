@@ -14,19 +14,19 @@ public class EnderecoVerifier implements Verifier<Entidade>{
         Endereco endereco = obj.getEndereco();
         List<String> invalidFields = new ArrayList();
 
-        if (!endereco.getCidade().matches("[a-zA-Z]+")){
+        if (!endereco.getCidade().matches("([\\w\\W]+)")){
             invalidFields.add("cidade");
         }
 
-        if (!endereco.getBairro().matches("[a-zA-Z]+")){
+        if (!endereco.getBairro().matches("([\\w\\W]+)")){
             invalidFields.add("bairro");
         }
 
-        if (!endereco.getRua().matches("[a-zA-Z]+")){
+        if (!endereco.getRua().matches("([\\w\\W]+)")){
             invalidFields.add("rua");
         }
 
-        if (!endereco.getEstado().matches("[a-zA-Z]+")){
+        if (!endereco.getEstado().matches("([\\w\\W]+)")){
             invalidFields.add("estado");
         }
 
