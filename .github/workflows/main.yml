@@ -14,10 +14,17 @@ jobs:
           distribution: 'corretto'
       - name: Build with Maven
         run: mvn package
+      - name: delete fpij.db file
+        run: rm fpij.db
+      - name: delete test.db file
+        run: rm test.db
   unit-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Run tests
         run: mvn test
-       
+      - name: delete fpij.db file
+        run: rm fpij.db
+      - name: delete test.db file
+        run: rm test.db
