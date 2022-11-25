@@ -5,11 +5,12 @@ import java.util.List;
 import org.fpij.jitakyoei.model.beans.Aluno;
 import org.fpij.jitakyoei.model.dao.DAO;
 import org.fpij.jitakyoei.model.dao.DAOImpl;
+import org.fpij.jitakyoei.model.validator.AlunoValidator;
 import org.fpij.jitakyoei.util.FiliadoID;
 import org.fpij.jitakyoei.view.AppView;
 
 public class AlunoBOImpl implements AlunoBO {
-	private static DAO<Aluno> dao = new DAOImpl<Aluno>(Aluno.class);
+	private static DAO<Aluno> dao = new DAOImpl<Aluno>(Aluno.class, new AlunoValidator());
 	private AppView view;
 
 	public AlunoBOImpl(AppView view) {

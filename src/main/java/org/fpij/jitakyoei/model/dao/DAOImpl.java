@@ -42,7 +42,7 @@ public class DAOImpl<E> implements DAO<E> {
 	public synchronized boolean save(E object) throws Exception {
 		System.out.println("DAOImpl.save() ->" + db.isClosed());
 		System.out.println(object);
-		if(validator.validate(object)){
+		if(object != null && validator.validate(object)){
 			db.store(object);
 			db.commit();
 			return true;

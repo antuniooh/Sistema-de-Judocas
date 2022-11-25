@@ -75,7 +75,7 @@ public class EntidadeBOImplTest {
     @Test
     public void checkUpdateEntidadeException() {
         try{
-            entidadeTest.updateEntidade(new Entidade());
+            entidadeTest.updateEntidade(GenerateObjects.generateEntidade());
         } catch (Exception e){
             assertNotNull(e);
             assertEquals(Exception.class, e.getClass());
