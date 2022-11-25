@@ -19,7 +19,7 @@ public interface AppFacade {
 	public abstract List<Professor> searchProfessor(Professor professor);
 	public abstract List<Professor> listProfessores();
 
-	public abstract void createEntidade(Entidade entidade);
+	public abstract void createEntidade(Entidade entidade) throws Exception;
 	public abstract void updateEntidade(Entidade entidade);
 	public abstract List<Entidade> searchEntidade(Entidade entidade);
 	public abstract List<Entidade> listEntidade();

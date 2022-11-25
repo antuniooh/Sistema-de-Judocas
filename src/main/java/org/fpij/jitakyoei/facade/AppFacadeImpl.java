@@ -121,11 +121,12 @@ public class AppFacadeImpl implements AppFacade {
 	}
 
 	@Override
-	public void createEntidade(Entidade entidade) {
+	public void createEntidade(Entidade entidade) throws Exception {
 		try{
 			entidadeBO.createEntidade(entidade);
 		}catch (Exception e) {
 			reportException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 

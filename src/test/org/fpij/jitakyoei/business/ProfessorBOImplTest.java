@@ -1,10 +1,18 @@
 package org.fpij.jitakyoei.business;
 
+import com.db4o.ObjectSet;
+import com.db4o.ext.ExtObjectContainer;
+import org.fpij.jitakyoei.model.beans.Entidade;
 import org.fpij.jitakyoei.model.beans.Filiado;
 import org.fpij.jitakyoei.model.beans.Professor;
+import org.fpij.jitakyoei.model.beans.ProfessorEntidade;
+import org.fpij.jitakyoei.model.dao.DAO;
+import org.fpij.jitakyoei.model.dao.DAOImpl;
 import org.fpij.jitakyoei.util.DatabaseManager;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import utils.GenerateObjects;
 
 import java.util.List;
@@ -15,11 +23,26 @@ import static org.junit.Assert.assertNotNull;
 public class ProfessorBOImplTest {
 
     ProfessorBOImpl professorTest = new ProfessorBOImpl(GenerateObjects.generateAppView());
+    private static DAO<Professor> dao = new DAOImpl<>(Professor.class);
+    private static ExtObjectContainer db;
 
     @BeforeClass
-    public static void set(){
+    public static void setUp() {
         DatabaseManager.setEnviroment(DatabaseManager.TEST);
+        db = DatabaseManager.getConnection();
+        clearDatabase();
+    }
 
+    @BeforeEach
+    public void beforeEach() {
+    }
+
+    public static void clearDatabase() {
+        ObjectSet result = db.get(Professor.class);
+
+        while (result.hasNext()) {
+            db.delete(result.next());
+        }
     }
 
     @Test
@@ -28,7 +51,7 @@ public class ProfessorBOImplTest {
         professorTest.createProfessor(professor);
 
         List<Professor> retornoLista = professorTest.searchProfessor(professor);
-        Professor professorReceived = retornoLista.get(retornoLista.size()-1);
+        Professor professorReceived = retornoLista.get(retornoLista.size() - 1);
 
         assertEquals(professor.getFiliado().getNome(), professorReceived.getFiliado().getNome());
     }
@@ -57,9 +80,9 @@ public class ProfessorBOImplTest {
 
     @Test
     public void checkUpdateProfessorIllegalArgumentException() throws Exception {
-        try{
+        try {
             professorTest.updateProfessor(new Professor());
-        } catch (Exception e){
+        } catch (Exception e) {
             assertNotNull(e);
             assertEquals(IllegalArgumentException.class, e.getClass());
         }
@@ -67,9 +90,9 @@ public class ProfessorBOImplTest {
 
     @Test
     public void checkUpdateProfessorException() throws Exception {
-        try{
+        try {
             professorTest.updateProfessor(new Professor());
-        } catch (Exception e){
+        } catch (Exception e) {
             assertNotNull(e);
             assertEquals(Exception.class, e.getClass());
         }
@@ -80,7 +103,7 @@ public class ProfessorBOImplTest {
     public void checkCreateProfessorException() throws Exception {
         try {
             professorTest.createProfessor(null);
-        } catch (Exception e){
+        } catch (Exception e) {
             assertNotNull(e);
             assertEquals(Exception.class, e.getClass());
         }
@@ -91,7 +114,7 @@ public class ProfessorBOImplTest {
 
         try {
             professorTest.searchProfessor(null);
-        } catch (Exception e){
+        } catch (Exception e) {
             assertNotNull(e);
             assertEquals(Exception.class, e.getClass());
         }

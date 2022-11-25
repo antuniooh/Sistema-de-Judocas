@@ -12,12 +12,30 @@ jobs:
         with:
           java-version: '8'
           distribution: 'corretto'
+      - name: show files
+        run: ls
+        continue-on-error: true
+
       - name: Build with Maven
         run: mvn package
+
+      - name: delete fpij.db file
+        run: rm fpij.db
+        continue-on-error: true
+      - name: delete test.db file
+        run: rm test.db
+        continue-on-error: true
   unit-tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+
       - name: Run tests
         run: mvn test
-       
+
+      - name: delete fpij.db file
+        run: rm fpij.db
+        continue-on-error: true
+      - name: delete test.db file
+        run: rm test.db
+        continue-on-error: true

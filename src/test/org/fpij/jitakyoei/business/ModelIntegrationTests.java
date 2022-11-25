@@ -5,6 +5,7 @@ import org.fpij.jitakyoei.model.dao.DAO;
 import org.fpij.jitakyoei.model.dao.DAOImpl;
 import org.fpij.jitakyoei.util.DatabaseManager;
 import org.junit.BeforeClass;
+import org.junit.jupiter.api.AfterEach;
 
 import java.util.Date;
 
@@ -58,5 +59,4 @@ public class ModelIntegrationTests {
 		
 		alunoDao = new DAOImpl<>(Aluno.class);
 	}
-	
 }

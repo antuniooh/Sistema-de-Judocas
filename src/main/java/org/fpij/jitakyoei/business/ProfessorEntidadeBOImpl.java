@@ -34,7 +34,7 @@ public class ProfessorEntidadeBOImpl implements ProfessorEntidadeBO {
 			throw new IllegalArgumentException( "Ocorreu um erro ao associar o professor às suas entidades!"
 				+ " Verifique se todos os dados foram preenchidos corretamente.");
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw new Exception("Desculpe, ocorreu um erro desconhecido ao salvar os relacionamentos.");
 		}
 	}

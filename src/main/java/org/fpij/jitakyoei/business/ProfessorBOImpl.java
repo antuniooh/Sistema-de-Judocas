@@ -45,7 +45,6 @@ public class ProfessorBOImpl implements ProfessorBO {
 			throw new IllegalArgumentException( "Ocorreu um erro ao atualizar os dados do professor!"
 				+ " Verifique se todos os dados foram preenchidos corretamente.");
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new Exception("Desculpe, ocorreu um erro desconhecido ao atualizar o professor.");
 		}
 	}
@@ -59,7 +58,6 @@ public class ProfessorBOImpl implements ProfessorBO {
 			throw new IllegalArgumentException("Ocorreu um erro ao listar de professores."
 				+ " Verifique se todos os dados foram preenchidos corretamente!");
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new Exception("Desculpe, ocorreu um erro desconhecido ao listar professores.");
 		}
 		return result;
@@ -75,7 +73,6 @@ public class ProfessorBOImpl implements ProfessorBO {
 			throw new IllegalArgumentException("Ocorreu um erro ao buscar os professores."
 				+ " Verifique se todos os dados foram preenchidos corretamente!");
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new Exception("Desculpe, ocorreu um erro desconhecido ao buscar os professores.");
 		}
 		return result;

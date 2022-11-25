@@ -12,21 +12,24 @@ public class FiliadoID {
 	private static FiliadoID ref;
 	
 	static{
-		dao = new DAOImpl<FiliadoID>(FiliadoID.class);
-		ref = getInstance();
+		try {
+			dao = new DAOImpl<FiliadoID>(FiliadoID.class);
+			ref = getInstance();
+		}
+		catch (Exception ignored){}
 	}
 
 	private FiliadoID() {
 		this.qtd = 0;
 	}
 
-	public synchronized static long getNextID() {
+	public synchronized static long getNextID() throws Exception{
 		ref.qtd++;
 		dao.save(ref);
 		return ref.qtd;
 	}
 
-	private static FiliadoID getInstance() {
+	private static FiliadoID getInstance() throws Exception{
 		List<FiliadoID> list = dao.list();
 		if (list.size() > 0) {
 			return list.get(0);

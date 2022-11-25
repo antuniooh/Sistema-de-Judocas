@@ -6,6 +6,8 @@ import static org.junit.Assert.assertNotNull;
 import java.util.Date;
 import java.util.List;
 
+import com.db4o.ObjectSet;
+import com.db4o.ext.ExtObjectContainer;
 import org.fpij.jitakyoei.model.beans.Aluno;
 import org.fpij.jitakyoei.model.beans.Endereco;
 import org.fpij.jitakyoei.model.beans.Entidade;
@@ -17,11 +19,17 @@ import org.fpij.jitakyoei.util.DatabaseManager;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import utils.GenerateObjects;
 
+@RunWith(JUnit4.class)
 public class DaoImplTest {
 	
 	private static DAO<Aluno> alunoDao;
+	private static ExtObjectContainer db;
 	private static Aluno aluno;
 	private static Entidade entidade;
 	private static Endereco endereco;
@@ -60,7 +68,7 @@ public class DaoImplTest {
 		entidade = new Entidade();
 		entidade.setEndereco(endereco);
 		entidade.setNome("Academia 1");
-		entidade.setTelefone1("(086)1234-5432");
+		entidade.setTelefone1("8612345432");
 		
 		aluno = new Aluno();
 		aluno.setFiliado(f1);
@@ -68,14 +76,26 @@ public class DaoImplTest {
 		aluno.setEntidade(entidade);
 		
 		alunoDao = new DAOImpl<Aluno>(Aluno.class);
+		db = DatabaseManager.getConnection();
 	}
 
-	public static void clearDatabase(){
-		List<Aluno> all = alunoDao.list();
-		for (Aluno each : all) {
-			alunoDao.delete(each);
+	@BeforeEach
+	public void printPhrase(){
+		System.out.println("BEFORE EACH TEST!");
+	}
+
+	@BeforeEach
+	public void clearDatabase(){
+		if (db.isClosed()) {
+			db = DatabaseManager.getConnection();
+			System.out.println("DB is closed?: " + db.isClosed());
 		}
-		assertEquals(0, alunoDao.list().size());
+
+		ObjectSet result = db.queryByExample(Aluno.class);
+
+		while(result.hasNext()) {
+			db.delete(result.next());
+		}
 	}
 
 	// check differents constructors
@@ -88,7 +108,6 @@ public class DaoImplTest {
 
 	@Test
 	public void checkConstructorWithUseEqualsAndValidatorCustom(){
-
 		DAO<Aluno> alunoDao = new DAOImpl<Aluno>(
 				Aluno.class,
 				new AlunoValidator(),
@@ -100,8 +119,6 @@ public class DaoImplTest {
 	// test save function
 	@Test
 	public void  testSalvarAlunoComAssociassoes() throws Exception{
-		clearDatabase();
-
 		boolean returnReceived = alunoDao.save(aluno);
 		assertEquals("036.464.453-27", alunoDao.get(aluno).getFiliado().getCpf());
 		assertEquals("Aécio", alunoDao.get(aluno).getFiliado().getNome());
@@ -112,9 +129,7 @@ public class DaoImplTest {
 	}
 
 	@Test
-	public void  testSalvarAlunoComErroValidacao(){
-		clearDatabase();
-
+	public void  testSalvarAlunoComErroValidacao() throws Exception{
 		class CustomValidator<T> implements Validator<T> {
 			@Override
 			public boolean validate(T obj) {
@@ -154,7 +169,7 @@ public class DaoImplTest {
 
 	// test list functions
 	@Test
-	public void testgetAlunosWithUseEquals(){
+	public void testgetAlunosWithUseEquals() throws Exception{
 		int qtd = alunoDao.list().size();
 
 		DAO<Aluno> alunoDaoTest = new DAOImpl<>(Aluno.class, true);
@@ -176,15 +191,13 @@ public class DaoImplTest {
 			Aluno retornoAluno = alunoDaoTest.get(aluno);
 		} catch (Exception e){
 			assertNotNull(e);
-			assertEquals(e.getClass(), IllegalArgumentException.class);
+			assertEquals(IllegalArgumentException.class, (e.getClass()));
 
 		}
 	}
 
-	// test get function
-
 	@Test
-	public void testListarEAdicionarAlunos(){
+	public void testListarEAdicionarAlunos() throws Exception{
 		int qtd = alunoDao.list().size();
 
 		alunoDao.save(GenerateObjects.generateAluno());
@@ -218,15 +231,5 @@ public class DaoImplTest {
 		List<Aluno> result = alunoDao.search(a);
 		assertEquals(1, result.size());
 		assertEquals("036.464.453-27", result.get(0).getFiliado().getCpf());
-		
-		clearDatabase();
-		assertEquals(0, alunoDao.search(a).size());
 	}
-	
-	@AfterClass
-	public static void closeDatabase(){
-		clearDatabase();
-		DatabaseManager.close();
-	}
-	
 }

@@ -5,11 +5,12 @@ import java.util.List;
 import org.fpij.jitakyoei.model.beans.Aluno;
 import org.fpij.jitakyoei.model.dao.DAO;
 import org.fpij.jitakyoei.model.dao.DAOImpl;
+import org.fpij.jitakyoei.model.validator.AlunoValidator;
 import org.fpij.jitakyoei.util.FiliadoID;
 import org.fpij.jitakyoei.view.AppView;
 
 public class AlunoBOImpl implements AlunoBO {
-	private static DAO<Aluno> dao = new DAOImpl<Aluno>(Aluno.class);
+	private static DAO<Aluno> dao = new DAOImpl<Aluno>(Aluno.class, new AlunoValidator());
 	private AppView view;
 
 	public AlunoBOImpl(AppView view) {
@@ -31,7 +32,6 @@ public class AlunoBOImpl implements AlunoBO {
 			throw new IllegalArgumentException("Ocorreu um erro ao cadastrar o aluno!"
 				+ " Verifique se todos os dados foram preenchidos corretamente.");
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new Exception("Desculpe, ocorreu um erro desconhecido ao salvar o aluno.");
 		}
 	}
@@ -45,11 +45,9 @@ public class AlunoBOImpl implements AlunoBO {
 			}
 			fireModelChangeEvent(old);
 		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
 			throw new IllegalArgumentException( "Ocorreu um erro ao salvar os dados do aluno."
 				+ " Verifique se todos os dados foram preenchidos corretamente!");
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new Exception("Desculpe, ocorreu um erro desconhecido ao salvar o aluno.");
 		}
 	}
@@ -65,7 +63,6 @@ public class AlunoBOImpl implements AlunoBO {
 			throw new IllegalArgumentException("Ocorreu um erro ao salvar os dados do aluno."
 				+ " Verifique se todos os dados foram preenchidos corretamente!");
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new Exception("Desculpe, ocorreu um erro desconhecido ao buscar os aluno.");
 		}
 		return result;
@@ -80,7 +77,6 @@ public class AlunoBOImpl implements AlunoBO {
 			throw new IllegalArgumentException("Ocorreu um erro ao obter a lista de alunos."
 				+ " Verifique se todos os dados foram preenchidos corretamente!");
 		} catch (Exception e) {
-			e.printStackTrace();
 			throw new Exception("Desculpe, ocorreu um erro desconhecido o obter a lista de alunos.");
 		}
 		return result;
