@@ -17,6 +17,14 @@ public class ProfessorEntidadeBOImplTest {
 
     ProfessorEntidadeBOImpl professorEntidadeBOTest = new ProfessorEntidadeBOImpl(GenerateObjects.generateAppView());
 
+    @AfterEach
+    public static void afterEach(){
+        DatabaseManager.setEnviroment(DatabaseManager.TEST);
+        try {
+            DatabaseManager.getConnection().rollback();
+        }catch (Exception ignore){}
+    }
+
     @Test
     public void checkCreateProfessorEntidade() throws Exception {
         ProfessorEntidade professorEntidade = GenerateObjects.generateProfessorEntidade();
@@ -26,14 +34,6 @@ public class ProfessorEntidadeBOImplTest {
 
         professorEntidadeBOTest.createProfessorEntidade(list);
 
-    }
-
-    @AfterEach
-    public static void afterEach(){
-        DatabaseManager.setEnviroment(DatabaseManager.TEST);
-        try {
-            DatabaseManager.getConnection().rollback();
-        }catch (Exception ignore){}
     }
 
     @Test

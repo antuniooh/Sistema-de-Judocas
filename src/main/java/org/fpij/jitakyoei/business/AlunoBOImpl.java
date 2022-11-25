@@ -32,7 +32,7 @@ public class AlunoBOImpl implements AlunoBO {
 			throw new IllegalArgumentException("Ocorreu um erro ao cadastrar o aluno!"
 				+ " Verifique se todos os dados foram preenchidos corretamente.");
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw new Exception("Desculpe, ocorreu um erro desconhecido ao salvar o aluno.");
 		}
 	}
@@ -46,11 +46,11 @@ public class AlunoBOImpl implements AlunoBO {
 			}
 			fireModelChangeEvent(old);
 		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw new IllegalArgumentException( "Ocorreu um erro ao salvar os dados do aluno."
 				+ " Verifique se todos os dados foram preenchidos corretamente!");
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw new Exception("Desculpe, ocorreu um erro desconhecido ao salvar o aluno.");
 		}
 	}
@@ -66,7 +66,7 @@ public class AlunoBOImpl implements AlunoBO {
 			throw new IllegalArgumentException("Ocorreu um erro ao salvar os dados do aluno."
 				+ " Verifique se todos os dados foram preenchidos corretamente!");
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw new Exception("Desculpe, ocorreu um erro desconhecido ao buscar os aluno.");
 		}
 		return result;
@@ -81,7 +81,7 @@ public class AlunoBOImpl implements AlunoBO {
 			throw new IllegalArgumentException("Ocorreu um erro ao obter a lista de alunos."
 				+ " Verifique se todos os dados foram preenchidos corretamente!");
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw new Exception("Desculpe, ocorreu um erro desconhecido o obter a lista de alunos.");
 		}
 		return result;

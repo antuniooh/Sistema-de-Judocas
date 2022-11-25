@@ -34,7 +34,7 @@ public class EntidadeBOImpl implements EntidadeBO {
 		} catch(InvalidEntidadeException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw new Exception("Desculpe, ocorreu um erro desconhecido ao salvar a entidade.");
 		}
 	}
@@ -48,7 +48,7 @@ public class EntidadeBOImpl implements EntidadeBO {
 			throw new IllegalArgumentException( "Ocorreu um erro ao listar entidades!"
 				+ " Verifique se todos os dados foram preenchidos corretamente.");
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw new Exception("Desculpe, ocorreu um erro desconhecido ao listar entidades.");
 		}
 		return result;
@@ -63,7 +63,7 @@ public class EntidadeBOImpl implements EntidadeBO {
 			throw new IllegalArgumentException( "Ocorreu um erro ao buscar entidades!"
 				+ " Verifique se todos os dados foram preenchidos corretamente.");
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw new Exception("Desculpe, ocorreu um erro desconhecido ao buscar entidades.");
 		}
 		return result;
@@ -78,7 +78,7 @@ public class EntidadeBOImpl implements EntidadeBO {
 			throw new IllegalArgumentException( "Ocorreu um erro ao atualizar a entidade!"
 				+ " Verifique se todos os dados foram preenchidos corretamente.");
 		} catch (Exception e) {
-			e.printStackTrace();
+//			e.printStackTrace();
 			throw new Exception("Desculpe, ocorreu um erro desconhecido ao atualizar a entidade.");
 		}
 	}
