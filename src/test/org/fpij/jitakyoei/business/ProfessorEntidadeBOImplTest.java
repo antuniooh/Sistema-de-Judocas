@@ -1,9 +1,10 @@
 package org.fpij.jitakyoei.business;
 
-import org.fpij.jitakyoei.model.beans.Aluno;
-import org.fpij.jitakyoei.model.beans.Filiado;
 import org.fpij.jitakyoei.model.beans.ProfessorEntidade;
+import org.fpij.jitakyoei.model.dao.DAO;
+import org.fpij.jitakyoei.model.dao.DAOImpl;
 import org.fpij.jitakyoei.util.DatabaseManager;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import utils.GenerateObjects;
@@ -17,12 +18,24 @@ public class ProfessorEntidadeBOImplTest {
 
     ProfessorEntidadeBOImpl professorEntidadeBOTest = new ProfessorEntidadeBOImpl(GenerateObjects.generateAppView());
 
+    private static DAO<ProfessorEntidade> dao = new DAOImpl<>(ProfessorEntidade.class);
+
+    @BeforeClass
+    public static void set(){
+        DatabaseManager.setEnviroment(DatabaseManager.TEST);
+    }
+
     @AfterEach
     public static void afterEach(){
-        DatabaseManager.setEnviroment(DatabaseManager.TEST);
-        try {
-            DatabaseManager.getConnection().rollback();
-        }catch (Exception ignore){}
+        clearDatabase();
+    }
+
+    public static void clearDatabase(){
+        List<ProfessorEntidade> all = dao.list();
+        for (ProfessorEntidade each : all) {
+            dao.delete(each);
+        }
+        assertEquals(0, dao.list().size());
     }
 
     @Test

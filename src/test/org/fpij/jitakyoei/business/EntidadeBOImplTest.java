@@ -1,7 +1,10 @@
 package org.fpij.jitakyoei.business;
 
+import org.fpij.jitakyoei.model.beans.Aluno;
 import org.fpij.jitakyoei.model.beans.Entidade;
 import org.fpij.jitakyoei.model.beans.Filiado;
+import org.fpij.jitakyoei.model.dao.DAO;
+import org.fpij.jitakyoei.model.dao.DAOImpl;
 import org.fpij.jitakyoei.util.DatabaseManager;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -17,6 +20,8 @@ public class EntidadeBOImplTest {
 
     EntidadeBOImpl entidadeTest = new EntidadeBOImpl(GenerateObjects.generateAppView());
 
+    private static DAO<Entidade> daoE = new DAOImpl<>(Entidade.class);
+
     @BeforeClass
     public static void set(){
         DatabaseManager.setEnviroment(DatabaseManager.TEST);
@@ -24,10 +29,15 @@ public class EntidadeBOImplTest {
 
     @AfterEach
     public static void afterEach(){
-        DatabaseManager.setEnviroment(DatabaseManager.TEST);
-        try {
-            DatabaseManager.getConnection().rollback();
-        }catch (Exception ignore){}
+        clearDatabase();
+    }
+
+    public static void clearDatabase(){
+        List<Entidade> all = daoE.list();
+        for (Entidade each : all) {
+            daoE.delete(each);
+        }
+        assertEquals(0, daoE.list().size());
     }
 
     @Test

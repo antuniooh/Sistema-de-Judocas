@@ -1,7 +1,6 @@
 package org.fpij.jitakyoei.model.validator;
 
 import org.assertj.swing.util.Pair;
-import org.fpij.jitakyoei.exceptions.InvalidEntidadeException;
 import org.fpij.jitakyoei.model.beans.Entidade;
 import org.fpij.jitakyoei.verifier.*;
 
@@ -35,6 +34,6 @@ public class EntidadeValidator implements Validator<Entidade> {
             return true;
         }
 
-        throw new InvalidEntidadeException(String.join(", ", invalidFields));
+        throw new IllegalArgumentException("Os seguintes dados da entidade estão inválidos: " + String.join(", ", invalidFields));
     }
 }

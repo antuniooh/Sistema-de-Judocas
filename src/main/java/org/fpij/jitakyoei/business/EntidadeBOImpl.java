@@ -2,7 +2,6 @@ package org.fpij.jitakyoei.business;
 
 import java.util.List;
 
-import org.fpij.jitakyoei.exceptions.InvalidEntidadeException;
 import org.fpij.jitakyoei.model.beans.Entidade;
 import org.fpij.jitakyoei.model.dao.DAO;
 import org.fpij.jitakyoei.model.dao.DAOImpl;
@@ -31,10 +30,9 @@ public class EntidadeBOImpl implements EntidadeBO {
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException( "Ocorreu um erro ao cadastrar a entidade!"
 				+ " Verifique se todos os dados foram preenchidos corretamente.");
-		} catch(InvalidEntidadeException e) {
-			throw new IllegalArgumentException(e.getMessage());
 		} catch (Exception e) {
-//			e.printStackTrace();
+			System.out.println("exception lançada: " + e.getClass());
+			e.printStackTrace();
 			throw new Exception("Desculpe, ocorreu um erro desconhecido ao salvar a entidade.");
 		}
 	}
@@ -61,7 +59,7 @@ public class EntidadeBOImpl implements EntidadeBO {
 			result = dao.search(entidade);
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException( "Ocorreu um erro ao buscar entidades!"
-				+ " Verifique se todos os dados foram preenchidos corretamente.");
+				+ e.getMessage());
 		} catch (Exception e) {
 //			e.printStackTrace();
 			throw new Exception("Desculpe, ocorreu um erro desconhecido ao buscar entidades.");

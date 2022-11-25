@@ -77,6 +77,7 @@ public class DaoImplTest {
 		try {
 			DatabaseManager.getConnection().rollback();
 		}catch (Exception ignore){}
+		clearDatabase();
 	}
 
 	public static void clearDatabase(){
