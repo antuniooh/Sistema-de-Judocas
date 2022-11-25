@@ -32,9 +32,14 @@ public class DAOImpl<E> implements DAO<E> {
 		this.validator = new DefaultValidator<E>();
 		this.clazz = clazz;
 	}
+
+	public DAOImpl(Class<E> clazz, Validator<E> val){
+		this.validator = val;
+		this.clazz = clazz;
+	}
 	
 	@Override
-	public synchronized boolean save(E object) {
+	public synchronized boolean save(E object) throws Exception {
 		System.out.println("DAOImpl.save() ->" + db.isClosed());
 		System.out.println(object);
 		if(validator.validate(object)){

@@ -2,15 +2,17 @@ package org.fpij.jitakyoei.business;
 
 import java.util.List;
 
+import org.fpij.jitakyoei.exceptions.InvalidEntidadeException;
 import org.fpij.jitakyoei.model.beans.Entidade;
 import org.fpij.jitakyoei.model.dao.DAO;
 import org.fpij.jitakyoei.model.dao.DAOImpl;
+import org.fpij.jitakyoei.model.validator.EntidadeValidator;
 import org.fpij.jitakyoei.view.AppView;
 
 public class EntidadeBOImpl implements EntidadeBO {
 	
 	private AppView view;
-	private static DAO<Entidade> dao = new DAOImpl<Entidade>(Entidade.class);
+	private static DAO<Entidade> dao = new DAOImpl<Entidade>(Entidade.class, new EntidadeValidator());
 
 	public EntidadeBOImpl(AppView view) {
 		this.view = view;
@@ -29,6 +31,8 @@ public class EntidadeBOImpl implements EntidadeBO {
 		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException( "Ocorreu um erro ao cadastrar a entidade!"
 				+ " Verifique se todos os dados foram preenchidos corretamente.");
+		} catch(InvalidEntidadeException e) {
+			throw new IllegalArgumentException(e.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new Exception("Desculpe, ocorreu um erro desconhecido ao salvar a entidade.");

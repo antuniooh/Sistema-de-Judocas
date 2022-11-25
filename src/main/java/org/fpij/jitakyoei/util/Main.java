@@ -38,7 +38,7 @@ public class Main {
 		view.registerFacade(facade);
 	}
 	
-	public static void dbPopulator(){
+	public static void dbPopulator() throws Exception{
 		Endereco endereco = new Endereco();
 		endereco.setBairro("Dirceu");
 		endereco.setCep("64078-213");
