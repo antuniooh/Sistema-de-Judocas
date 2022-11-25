@@ -25,7 +25,9 @@ public class EntidadeBOImplTest {
     @AfterEach
     public static void afterEach(){
         DatabaseManager.setEnviroment(DatabaseManager.TEST);
-        DatabaseManager.getConnection().rollback();
+        try {
+            DatabaseManager.getConnection().rollback();
+        }catch (Exception ignore){}
     }
 
     @Test
