@@ -12,6 +12,10 @@ jobs:
         with:
           java-version: '8'
           distribution: 'corretto'
+      - name: delete fpij.db file
+        run: rm fpij.db
+      - name: delete test.db file
+        run: rm test.db
       - name: Build with Maven
         run: mvn package
       - name: delete fpij.db file
@@ -22,6 +26,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: delete fpij.db file
+        run: rm fpij.db
+      - name: delete test.db file
+        run: rm test.db
       - name: Run tests
         run: mvn test
       - name: delete fpij.db file
