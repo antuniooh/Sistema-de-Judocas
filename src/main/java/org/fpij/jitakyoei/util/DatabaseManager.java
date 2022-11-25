@@ -14,6 +14,15 @@ public class DatabaseManager {
 		return open();
 	}
 
+	public static ExtObjectContainer getTestDBConnection() {
+		if(db != null){
+			db.close();
+		}
+		ObjectContainer objectContainer = Db4o.openFile(TEST);
+		db = objectContainer.ext();
+		return db;
+	}
+
 	public static ExtObjectContainer open() {
 		if(db != null){
 			db.close();

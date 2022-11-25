@@ -37,11 +37,21 @@ public class DAOImpl<E> implements DAO<E> {
 		this.validator = val;
 		this.clazz = clazz;
 	}
-	
+
+	private void openDBIfClosed() {
+		if (db.isClosed()) {
+			db = DatabaseManager.getConnection();
+			System.out.println("DB is closed?: " + db.isClosed());
+		}
+	}
+
 	@Override
 	public synchronized boolean save(E object) throws Exception {
 		System.out.println("DAOImpl.save() ->" + db.isClosed());
 		System.out.println(object);
+
+		openDBIfClosed();
+
 		if(object != null && validator.validate(object)){
 			db.store(object);
 			db.commit();
@@ -54,6 +64,7 @@ public class DAOImpl<E> implements DAO<E> {
 	
 	@Override
 	public synchronized void delete(E object) {
+		openDBIfClosed();
 		db.delete(object);
 		db.commit();
 	}
@@ -61,6 +72,7 @@ public class DAOImpl<E> implements DAO<E> {
 	@Override
 	public List<E> list() {
 		List<E> objects = new ArrayList<E>();
+		openDBIfClosed();
 		ObjectSet<E> result = db.queryByExample(clazz);
 		while(result.hasNext()){
 			objects.add((E)result.next());
@@ -70,6 +82,7 @@ public class DAOImpl<E> implements DAO<E> {
 	
 	@Override
 	public E get(E object) throws IllegalArgumentException{
+		openDBIfClosed();
 		List<E> objectList = db.queryByExample(clazz);
 		if(useEquals){
 			for(E each: objectList){
@@ -90,6 +103,7 @@ public class DAOImpl<E> implements DAO<E> {
 	@Override
 	public List<E> search(E object) {
 		List<E> objects = new ArrayList<E>();
+		openDBIfClosed();
 		ObjectSet<E> result = db.queryByExample(object);
 		while(result.hasNext()){
 			objects.add((E)result.next());

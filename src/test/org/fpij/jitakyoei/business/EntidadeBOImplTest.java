@@ -1,14 +1,18 @@
 package org.fpij.jitakyoei.business;
 
+import com.db4o.ObjectSet;
+import com.db4o.ext.ExtObjectContainer;
 import org.fpij.jitakyoei.model.beans.Aluno;
 import org.fpij.jitakyoei.model.beans.Entidade;
 import org.fpij.jitakyoei.model.beans.Filiado;
 import org.fpij.jitakyoei.model.dao.DAO;
 import org.fpij.jitakyoei.model.dao.DAOImpl;
 import org.fpij.jitakyoei.util.DatabaseManager;
+import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import utils.GenerateObjects;
 
 import java.util.List;
@@ -21,23 +25,25 @@ public class EntidadeBOImplTest {
     EntidadeBOImpl entidadeTest = new EntidadeBOImpl(GenerateObjects.generateAppView());
 
     private static DAO<Entidade> daoE = new DAOImpl<>(Entidade.class);
+    private static ExtObjectContainer db;
 
     @BeforeClass
-    public static void set(){
+    public static void setUp() {
         DatabaseManager.setEnviroment(DatabaseManager.TEST);
-    }
-
-    @AfterEach
-    public static void afterEach(){
+        db = DatabaseManager.getTestDBConnection();
         clearDatabase();
     }
 
+    @BeforeEach
+    public void beforeEach(){
+    }
+
     public static void clearDatabase(){
-        List<Entidade> all = daoE.list();
-        for (Entidade each : all) {
-            daoE.delete(each);
+        ObjectSet result = db.get(Entidade.class);
+
+        while(result.hasNext()) {
+            db.delete(result.next());
         }
-        assertEquals(0, daoE.list().size());
     }
 
     @Test
@@ -58,24 +64,26 @@ public class EntidadeBOImplTest {
         entidadeTest.createEntidade(entidade);
 
         List<Entidade> retornoLista = entidadeTest.listAll();
-        Entidade lastEntidadeInserted = retornoLista.get(0);
+        Entidade lastEntidadeInserted = retornoLista.get(retornoLista.size()-1);
 
-        lastEntidadeInserted.setTelefone2("teste");
+        lastEntidadeInserted.setTelefone2("1140028922");
 
         // update last Alunp
         entidadeTest.updateEntidade(lastEntidadeInserted);
 
         // search for the last entidade
         List<Entidade> retorno = entidadeTest.listAll();
-        Entidade entidadeReceivedFinal = retorno.get(0);
+        Entidade entidadeReceivedFinal = retorno.get(retornoLista.size()-1);
 
-        assertEquals("teste", entidadeReceivedFinal.getTelefone2());
+        assertEquals("1140028922", entidadeReceivedFinal.getTelefone2());
     }
 
     @Test
     public void checkUpdateEntidadeIllegalArgumentException() {
         try{
-            entidadeTest.updateEntidade(GenerateObjects.generateEntidade());
+            Entidade entidade = GenerateObjects.generateEntidade();
+            entidade.setCnpj("000000");
+            entidadeTest.updateEntidade(entidade);
         } catch (Exception e){
             assertNotNull(e);
             assertEquals(IllegalArgumentException.class, e.getClass());

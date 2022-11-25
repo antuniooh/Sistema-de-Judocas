@@ -34,6 +34,7 @@ public class GenerateObjects {
         entidade.setEndereco(GenerateObjects.generateEndereco());
         entidade.setNome("Academia");
         entidade.setTelefone1("86912345432");
+        entidade.setTelefone2("86912345432");
         entidade.setCnpj("44152444000160");
         entidade.setEndereco(generateEndereco());
         return entidade;
@@ -46,6 +47,7 @@ public class GenerateObjects {
         endereco.setCidade("Teresina");
         endereco.setEstado("PI");
         endereco.setRua("Rua Des Berilo Mota");
+        endereco.setNumero("55");
         return endereco;
     }
 

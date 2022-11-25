@@ -1,5 +1,7 @@
 package org.fpij.jitakyoei.business;
 
+import com.db4o.ObjectSet;
+import com.db4o.ext.ExtObjectContainer;
 import org.fpij.jitakyoei.facade.AppFacade;
 import org.fpij.jitakyoei.model.beans.*;
 import org.fpij.jitakyoei.model.dao.DAO;
@@ -10,6 +12,7 @@ import org.fpij.jitakyoei.view.AppView;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import utils.GenerateObjects;
@@ -22,13 +25,25 @@ import static org.junit.Assert.*;
 public class AlunoBOImplTest {
 
     AlunoBOImpl alunoTest = new AlunoBOImpl(GenerateObjects.generateAppView());
+    private static ExtObjectContainer db;
 
-    @AfterEach
-    public static void afterEach(){
+    @BeforeClass
+    public static void setUp() {
         DatabaseManager.setEnviroment(DatabaseManager.TEST);
-        try {
-            DatabaseManager.getConnection().rollback();
-        }catch (Exception ignore){}
+        db = DatabaseManager.getTestDBConnection();
+        clearDatabase();
+    }
+
+    @BeforeEach
+    public void beforeEach(){
+    }
+
+    public static void clearDatabase(){
+        ObjectSet result = db.get(Aluno.class);
+
+        while(result.hasNext()) {
+            db.delete(result.next());
+        }
     }
 
     @Test

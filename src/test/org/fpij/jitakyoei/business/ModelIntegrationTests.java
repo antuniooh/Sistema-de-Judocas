@@ -59,13 +59,4 @@ public class ModelIntegrationTests {
 		
 		alunoDao = new DAOImpl<>(Aluno.class);
 	}
-
-	@AfterEach
-	public static void afterEach(){
-		DatabaseManager.setEnviroment(DatabaseManager.TEST);
-		try {
-			DatabaseManager.getConnection().rollback();
-		}catch (Exception ignore){}
-	}
-	
 }
