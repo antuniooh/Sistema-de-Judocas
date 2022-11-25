@@ -18,6 +18,9 @@ jobs:
       - name: delete test.db file
         run: rm test.db
         continue-on-error: true
+      - name: show files
+        run: ls
+        continue-on-error: true
 
       - name: Build with Maven
         run: mvn package
